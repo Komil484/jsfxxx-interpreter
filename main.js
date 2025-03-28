@@ -1,9 +1,9 @@
-const fs = require("fs")
+const fs = require("fs");
 
 const number = n => {
     if (n <= 0) return '+[]';
     if (n < 10) return Array.from({length: n}, () => '+!![]').join('');
-    return a = `+(${Array.from(n.toString(), n => `[${number(+n)}]`).join('+')})`
+    return a = `+(${Array.from(n.toString(), n => `[${number(+n)}]`).join('+')})`;
 }
 
 const character = {};
@@ -13,8 +13,8 @@ const fromString = s => s.split('').map(c => {
     if (c in character) return character[c];
     const n = c.charCodeAt(0);
     if (n < 0x10000) return `(${_function}(${fromString(`return '\\u${n.toString(16).padStart(4, "0")}'`)})())`;
-    return `(${_function}(${fromString(`return '\\u{${n.toString(16)}'}`)}())`;
-}).join('+')
+    return `(${_function}(${fromString(`return '\\u{${n.toString(16)}'}`)})())`;
+}).join('+');
 
 character.f = `(![]+[])[${number(0)}]`;
 character.a = `(![]+[])[${number(1)}]`;
@@ -72,6 +72,6 @@ console.log("Reading file");
 const source = fs.readFileSync("input.js", "utf8");
 console.log("Transpiling");
 const output = `${_function}(${fromString(source)})()`;
-console.log("Writing to file")
+console.log("Writing to file");
 fs.writeFileSync("out.js", output);
-console.log("Done")
+console.log("Done");
